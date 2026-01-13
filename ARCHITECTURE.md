@@ -95,7 +95,29 @@ Plugins implement the `Hooks` interface to intercept and modify system behavior:
 
 ---
 
-## 6. Recommendations for Contribution
+## 6. Comparison with Claude Code
+
+While OpenCode shares capability goals with Claude Code, its architecture differs significantly to support enterprise use cases and open-source contributions.
+
+### 6.1. Architecture Model
+*   **OpenCode**: Decoupled **Client/Server** architecture. The core agent logic runs in a server process that exposes an API. The TUI is just one of many possible clients (potentially allowing mobile or web clients to connect to a remote agent).
+*   **Claude Code**: Primarily a monolithic CLI tool where the interface and logic are tightly coupled in a single executable.
+
+### 6.2. Extensibility
+*   **OpenCode**: Open-source with a first-class **Plugin System** and **MCP** support. Teams can write custom TypeScript plugins to modify agent behavior, add internal tools, or integrate with private APIs.
+*   **Claude Code**: Closed-source binary. Extensibility is generally limited to MCP servers.
+
+### 6.3. LLM Support
+*   **OpenCode**: **Provider Agnostic**. Built on Vercel's `ai-sdk`, it supports Anthropic, OpenAI, Google Gemini, and potentially local LLMs.
+*   **Claude Code**: Tightly coupled to Anthropic's models (Claude).
+
+### 6.4. Infrastructure
+*   **OpenCode**: Includes a self-hostable "Zen" backend and "Enterprise" dashboard for team management, billing, and shared context.
+*   **Claude Code**: Managed service provided by Anthropic.
+
+---
+
+## 7. Recommendations for Contribution
 
 1.  **Adding a Tool**: Create a new file in `packages/opencode/src/tool/` or create a standalone plugin. Use `Tool.define` and schemas for type safety.
 2.  **Modifying Agent Behavior**: Look into `packages/opencode/src/agent/prompt/` for prompt engineering or `SessionProcessor.ts` to alter the execution loop.

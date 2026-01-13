@@ -95,7 +95,29 @@ OpenCode 专为企业团队扩展而设计。
 
 ---
 
-## 6. 贡献建议 (Recommendations for Contribution)
+## 6. 与 Claude Code 的对比 (Comparison with Claude Code)
+
+虽然 OpenCode 与 Claude Code 在功能目标上相似，但其架构设计在支持企业用例和开源贡献方面有显著差异。
+
+### 6.1. 架构模型 (Architecture Model)
+*   **OpenCode**：解耦的 **客户端/服务端 (Client/Server)** 架构。核心 Agent 逻辑在暴露 API 的服务端进程中运行。TUI 只是众多可能客户端中的一个（支持通过移动或 Web 客户端连接远程 Agent）。
+*   **Claude Code**：主要是单体 CLI 工具，界面与逻辑紧密耦合在单个可执行文件中。
+
+### 6.2. 扩展性 (Extensibility)
+*   **OpenCode**：开源并拥有完整的 **插件系统 (Plugin System)** 和 **MCP** 支持。团队可以编写自定义 TypeScript 插件来修改 Agent 行为、添加内部工具或集成私有 API。
+*   **Claude Code**：闭源二进制文件。扩展性通常仅限于 MCP 服务器。
+
+### 6.3. LLM 支持 (LLM Support)
+*   **OpenCode**：**供应商无关 (Provider Agnostic)**。基于 Vercel 的 `ai-sdk` 构建，支持 Anthropic, OpenAI, Google Gemini, 以及潜在的本地 LLM。
+*   **Claude Code**：与 Anthropic 的模型 (Claude) 紧密耦合。
+
+### 6.4. 基础设施 (Infrastructure)
+*   **OpenCode**：包含可自托管的 "Zen" 后端和 "Enterprise" 仪表板，用于团队管理、计费和共享上下文。
+*   **Claude Code**：由 Anthropic 提供的托管服务。
+
+---
+
+## 7. 贡献建议 (Recommendations for Contribution)
 
 1.  **添加工具**：在 `packages/opencode/src/tool/` 中创建新文件或创建独立插件。使用 `Tool.define` 和 Schema 以确保类型安全。
 2.  **修改 Agent 行为**：查看 `packages/opencode/src/agent/prompt/` 进行提示词工程，或查看 `SessionProcessor.ts` 以更改执行循环。
